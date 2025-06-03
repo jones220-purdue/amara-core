@@ -3,10 +3,17 @@ import importlib
 
 from .base import TTSEngine
 from .espeak_tts import EspeakTTS
+from .coqui_tts import CoquiTTS, DEFAULT_COQUI_MODEL_NAME
 
 def get_tts_factory(
-        engine: str) -> TTSEngine:
+        engine: str,
+        model_name: str = None) -> TTSEngine:
 
+    if engine == "coqui":
+        if not model_name:
+            model_name = DEFAULT_COQUI_MODEL_NAME
+            
+        return CoquiTTS(model_name)
     if engine == "espeak":
         return EspeakTTS()
     elif engine == "custom":
