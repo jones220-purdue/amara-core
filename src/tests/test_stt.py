@@ -1,11 +1,10 @@
 import pytest
 import wave
 
-from stt.vosk_stt import VoskSTT
-from stt.whisper_stt import WhisperSTT
+from stt.factory import get_stt_engine
 
 def test_vosk_transcription_from_file(dummy_audio_path):
-    stt = VoskSTT("models/vosk-model-small-en-us")
+    stt = get_stt_engine("vosk")
     assert stt.is_ready
 
     audio_data = read_wav_file(dummy_audio_path)
@@ -16,7 +15,7 @@ def test_vosk_transcription_from_file(dummy_audio_path):
     assert "world" in text.lower()
 
 def test_whisper_transcription_from_file(dummy_audio_path):
-    stt = WhisperSTT("tiny")
+    stt = get_stt_engine("whisper", model_path="tiny")
     assert stt.is_ready
 
     audio_data = read_wav_file(dummy_audio_path)

@@ -6,12 +6,16 @@ import soundfile as sf
 
 from .base import STTEngine
 
+DEFAULT_WHISPER_MODEL = "small"
+DEFAULT_WHISPER_LANGUAGE = "en"
+DEFAULT_WHISPER_SAMPLE_RATE = 16000
+
 class WhisperSTT(STTEngine):
     def __init__(
             self,
-            model_path: str = "small",
-            language: str = "en",
-            sample_rate=16000):
+            model_path: str = DEFAULT_WHISPER_MODEL,
+            language: str = DEFAULT_WHISPER_LANGUAGE,
+            sample_rate = DEFAULT_WHISPER_SAMPLE_RATE):
         print("HELLO")
         self.model = whisper.load_model(model_path)
         print("WORLD")
@@ -32,7 +36,7 @@ class WhisperSTT(STTEngine):
         return self._ready
     
     
-    def decode_wav_bytes(self, audio_data: bytes, target_sr=16000) -> np.ndarray:
+    def decode_wav_bytes(self, audio_data: bytes, target_sr=DEFAULT_WHISPER_SAMPLE_RATE) -> np.ndarray:
         try:
             with io.BytesIO(audio_data) as f:
                 audio, sr = sf.read(f)
