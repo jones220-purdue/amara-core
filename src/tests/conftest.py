@@ -21,3 +21,8 @@ def dummy_audio_path(tmp_path_factory):
         synthesize_test_audio(str(final_path), text="hello world")
 
     return str(final_path)
+
+@pytest.fixture(scope="session")
+def dummy_generation_path(tmp_path_factory):
+    final_path = tmp_path_factory.mktemp("audio") / "genertion.wav"
+    return str(final_path)
